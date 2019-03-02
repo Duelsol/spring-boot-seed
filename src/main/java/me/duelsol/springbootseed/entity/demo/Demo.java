@@ -1,7 +1,8 @@
-package me.duelsol.springbootseed.entity;
+package me.duelsol.springbootseed.entity.demo;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.duelsol.springbootseed.entity.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

@@ -1,6 +1,6 @@
-package me.duelsol.springbootseed.service;
+package me.duelsol.springbootseed.dao.demo;
 
-import me.duelsol.springbootseed.entity.Demo;
+import me.duelsol.springbootseed.entity.demo.Demo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
