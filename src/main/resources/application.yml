@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: spring-boot-seed
+
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: true
+    show-sql: true
+
+  datasource:
+    druid:
+      main:
+        url: jdbc:mysql://localhost:3306/springmvc
+        username: root
+        password: root
+
+  cache:
+    type: redis
+
+  redis:
+    host: localhost
+    port: 6379
+    password:
+
+server:
+  port: 9080
