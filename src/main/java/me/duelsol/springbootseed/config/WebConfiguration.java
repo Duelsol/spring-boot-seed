@@ -16,8 +16,8 @@ public class WebConfiguration {
     @Bean
     public FilterRegistrationBean<Filter> xssFilter() {
         FilterRegistrationBean<Filter> xssFilter = new FilterRegistrationBean<>();
-        xssFilter.setFilter(new XSSFilter());
         xssFilter.setName("xssFilter");
+        xssFilter.setFilter(new XSSFilter());
         xssFilter.setOrder(1);
         return xssFilter;
     }

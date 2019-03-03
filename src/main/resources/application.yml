@@ -1,3 +1,6 @@
+server:
+  port: 9080
+
 spring:
   application:
     name: spring-boot-seed
@@ -35,5 +38,6 @@ spring:
     port: 6379
     password:
 
-server:
-  port: 9080
+jwt:
+  subject: admin
+  key: whosyourdaddy
