@@ -61,6 +61,7 @@ spring:
     host: localhost
     port: 6379
     password:
+    timeout: 10s
 
   task:
     execution:
