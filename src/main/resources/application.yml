@@ -62,6 +62,14 @@ spring:
     port: 6379
     password:
 
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 50
+        queue-capacity: 200
+        keep-alive: 60s
+
 jwt:
   subject: admin
   key: whosyourdaddy
