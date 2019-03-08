@@ -1,4 +1,4 @@
-package me.duelsol.springbootseed.service.demo.impl;
+package me.duelsol.springbootseed.service.demo;
 
 import me.duelsol.springbootseed.dao.demo.DemoRepository;
 import me.duelsol.springbootseed.entity.demo.Demo;
