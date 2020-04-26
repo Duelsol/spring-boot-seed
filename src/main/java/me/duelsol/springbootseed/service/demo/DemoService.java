@@ -1,16 +1,15 @@
 package me.duelsol.springbootseed.service.demo;
 
-import me.duelsol.springbootseed.entity.demo.Demo;
-
-import java.util.List;
+import me.duelsol.springbootseed.dto.demo.DemoDTO;
+import me.duelsol.springbootseed.dto.demo.DemoListDTO;
 
 /**
  * @author 冯奕骅
  */
 public interface DemoService {
 
-    List<Demo> findAllDemos();
+    DemoListDTO findAllDemos();
 
-    Demo createDemo(int amount, String detail);
+    DemoDTO createDemo(int amount, String detail);
 
 }

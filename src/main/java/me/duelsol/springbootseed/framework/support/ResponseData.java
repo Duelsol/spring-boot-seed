@@ -1,5 +1,6 @@
 package me.duelsol.springbootseed.framework.support;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -10,19 +11,13 @@ import java.io.Serializable;
 @Getter
 public class ResponseData implements Serializable {
 
-    /**
-     * 编号，非"0"时都表示发生错误。
-     */
-    private String code = null;
+    @Schema(description = "编号，非\"0\"时都表示发生错误。")
+    private String code;
 
-    /**
-     * 消息，在错误时说明具体原因。
-     */
+    @Schema(description = "消息，在错误时说明具体原因。")
     private String message = null;
 
-    /**
-     * 数据。
-     */
+    @Schema(description = "数据。")
     private Object data = null;
 
     public ResponseData() {

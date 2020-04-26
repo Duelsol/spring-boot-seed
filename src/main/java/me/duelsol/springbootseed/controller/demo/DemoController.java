@@ -1,6 +1,9 @@
 package me.duelsol.springbootseed.controller.demo;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
+import me.duelsol.springbootseed.dto.demo.DemoDTO;
+import me.duelsol.springbootseed.dto.demo.DemoListDTO;
 import me.duelsol.springbootseed.framework.security.AccessTokenManager;
 import me.duelsol.springbootseed.framework.support.ResponseData;
 import me.duelsol.springbootseed.service.demo.DemoService;
@@ -22,6 +25,7 @@ public class DemoController {
     @Autowired
     private DemoService demoService;
 
+    @Operation(summary = "登录接口", description = "", tags = { "demo" })
     @PostMapping(value = "login")
     public ResponseData login() {
         UsernamePasswordToken token = new UsernamePasswordToken("admin", "123456");
@@ -30,6 +34,7 @@ public class DemoController {
         return new ResponseData(AccessTokenManager.generate());
     }
 
+    @Operation(summary = "注销接口", description = "", tags = { "demo" })
     @PostMapping(value = "logout")
     public ResponseData logout() {
         Subject subject = SecurityUtils.getSubject();
@@ -37,14 +42,16 @@ public class DemoController {
         return new ResponseData("Logout successful.");
     }
 
+    @Operation(summary = "列表接口", description = "获取所有数据", tags = { "demo" })
     @GetMapping(value = "list")
-    public ResponseData list() {
-        return new ResponseData(demoService.findAllDemos());
+    public DemoListDTO list() {
+        return demoService.findAllDemos();
     }
 
-    @PostMapping(value = "create")
-    public ResponseData create() {
-        return new ResponseData(demoService.createDemo(100, "no detail"));
+    @Operation(summary = "保存接口", description = "新增数据", tags = { "demo" })
+    @PostMapping(value = "save")
+    public DemoDTO save() {
+        return demoService.createDemo(100, "no detail");
     }
 
 }

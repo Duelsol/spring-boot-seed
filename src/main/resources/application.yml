@@ -71,6 +71,9 @@ spring:
         queue-capacity: 200
         keep-alive: 60s
 
+springdoc:
+  packages-to-scan: me.duelsol.springbootseed
+
 jwt:
   subject: admin
   key: whosyourdaddy
