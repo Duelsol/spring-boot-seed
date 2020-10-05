@@ -1,5 +1,15 @@
 server:
   port: 9080
+  servlet:
+    session:
+      cookie:
+        secure: true
+      timeout: 60
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 400
+    accept-count: 1000
+  connection-timeout: 20000
 
 spring:
   application:
@@ -76,6 +86,16 @@ spring:
 
 springdoc:
   packages-to-scan: me.duelsol.springbootseed
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 jwt:
   subject: admin
