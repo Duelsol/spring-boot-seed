@@ -7,7 +7,7 @@ server:
       timeout: 60
   tomcat:
     uri-encoding: UTF-8
-    max-threads: 400
+    max-threads: 500
     accept-count: 1000
   connection-timeout: 20000
 
