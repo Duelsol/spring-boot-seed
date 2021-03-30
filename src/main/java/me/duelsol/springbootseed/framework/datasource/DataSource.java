@@ -1,4 +1,4 @@
-package me.duelsol.springbootseed.framework.datasource.annotation;
+package me.duelsol.springbootseed.framework.datasource;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

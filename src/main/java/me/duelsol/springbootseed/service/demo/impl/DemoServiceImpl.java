@@ -1,10 +1,11 @@
-package me.duelsol.springbootseed.service.demo;
+package me.duelsol.springbootseed.service.demo.impl;
 
 import me.duelsol.springbootseed.dao.demo.DemoRepository;
 import me.duelsol.springbootseed.dto.demo.DemoBean;
 import me.duelsol.springbootseed.dto.demo.DemoDTO;
 import me.duelsol.springbootseed.dto.demo.DemoListDTO;
 import me.duelsol.springbootseed.entity.demo.Demo;
+import me.duelsol.springbootseed.service.demo.DemoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

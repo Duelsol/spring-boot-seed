@@ -14,7 +14,7 @@ import java.util.Date;
  * @author 冯奕骅
  */
 @MappedSuperclass
-@EntityListeners({AuditingEntityListener.class})
+@EntityListeners({AuditingEntityListener.class, CacheEntityListener.class})
 @Getter
 @Setter
 public class BaseEntity implements Serializable {
