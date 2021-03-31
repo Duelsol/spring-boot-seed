@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.duelsol.springbootseed.dto.demo.DemoDTO;
 import me.duelsol.springbootseed.dto.demo.DemoListDTO;
 import me.duelsol.springbootseed.framework.security.AccessTokenManager;
-import me.duelsol.springbootseed.framework.support.ResponseData;
 import me.duelsol.springbootseed.service.demo.DemoService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -27,19 +26,19 @@ public class DemoController {
 
     @Operation(summary = "登录接口", description = "", tags = { "demo" })
     @PostMapping(value = "login")
-    public ResponseData login() {
+    public String login() {
         UsernamePasswordToken token = new UsernamePasswordToken("admin", "123456");
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
-        return new ResponseData(AccessTokenManager.generate());
+        return AccessTokenManager.generate();
     }
 
     @Operation(summary = "注销接口", description = "", tags = { "demo" })
     @PostMapping(value = "logout")
-    public ResponseData logout() {
+    public String logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return new ResponseData("Logout successful.");
+        return "Logout successful.";
     }
 
     @Operation(summary = "列表接口", description = "获取所有数据", tags = { "demo" })
