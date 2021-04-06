@@ -5,6 +5,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
@@ -23,26 +25,41 @@ public class CacheEntityListener implements ApplicationContextAware {
 
     @PostPersist
     public void postPersist(Object target) {
-        BaseEntity entity = target instanceof BaseEntity ? (BaseEntity) target : null;
-        getCacheServiceByEntity(entity).forEach(s -> s.put(entity));
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                BaseEntity entity = target instanceof BaseEntity ? (BaseEntity) target : null;
+                getCacheServiceByEntity(entity).forEach(s -> s.put(entity));
+            }
+        });
     }
 
     @PostUpdate
     public void postUpdate(Object target) {
-        BaseEntity entity = target instanceof BaseEntity ? (BaseEntity) target : null;
-        getCacheServiceByEntity(entity).forEach(s -> {
-            if (s.isLogicalDelete(entity)) {
-                s.evict(entity);
-            } else {
-                s.put(entity);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                BaseEntity entity = target instanceof BaseEntity ? (BaseEntity) target : null;
+                getCacheServiceByEntity(entity).forEach(s -> {
+                    if (s.isLogicalDelete(entity)) {
+                        s.evict(entity);
+                    } else {
+                        s.put(entity);
+                    }
+                });
             }
         });
     }
 
     @PostRemove
     public void postRemove(Object target) {
-        BaseEntity entity = target instanceof BaseEntity ? (BaseEntity) target : null;
-        getCacheServiceByEntity(entity).forEach(s -> s.evict(entity));
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                BaseEntity entity = target instanceof BaseEntity ? (BaseEntity) target : null;
+                getCacheServiceByEntity(entity).forEach(s -> s.evict(entity));
+            }
+        });
     }
 
     @Override
