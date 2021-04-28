@@ -79,9 +79,9 @@ spring:
   task:
     execution:
       pool:
-        core-size: 5
-        max-size: 50
-        queue-capacity: 200
+        core-size: 9
+        max-size: 18
+        queue-capacity: 1000
         keep-alive: 60s
 
 springdoc:
