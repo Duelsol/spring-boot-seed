@@ -5,7 +5,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.persistence.PostPersist;
@@ -25,7 +25,7 @@ public class CacheEntityListener implements ApplicationContextAware {
 
     @PostPersist
     public void postPersist(Object target) {
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
             @Override
             public void afterCommit() {
                 BaseEntity entity = target instanceof BaseEntity ? (BaseEntity) target : null;
@@ -36,7 +36,7 @@ public class CacheEntityListener implements ApplicationContextAware {
 
     @PostUpdate
     public void postUpdate(Object target) {
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
             @Override
             public void afterCommit() {
                 BaseEntity entity = target instanceof BaseEntity ? (BaseEntity) target : null;
@@ -53,7 +53,7 @@ public class CacheEntityListener implements ApplicationContextAware {
 
     @PostRemove
     public void postRemove(Object target) {
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
             @Override
             public void afterCommit() {
                 BaseEntity entity = target instanceof BaseEntity ? (BaseEntity) target : null;
