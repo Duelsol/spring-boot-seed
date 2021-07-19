@@ -38,10 +38,7 @@ spring:
       initial-size: 1
       max-active: 20
       min-idle: 1
-      max-wait: 60000
-      remove-abandoned: true
-      remove-abandoned-timeout: 180
-      log-abandoned: true
+      max-wait: 6000
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
       validation-query: SELECT 'x'
