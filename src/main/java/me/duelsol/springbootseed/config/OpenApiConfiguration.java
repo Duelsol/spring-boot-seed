@@ -1,10 +1,15 @@
 package me.duelsol.springbootseed.config;
 
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * @author 冯奕骅
@@ -13,15 +18,24 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfiguration {
 
     @Bean
-    public OpenAPI openAPI() {
-        Info info = new Info();
-        info.setTitle("Spring Boot Seed API");
-        info.setDescription("This is a sample Spring Boot RESTful service using springdoc-openapi and OpenAPI 3.");
-        info.setVersion("1.0.0");
+    public Docket docket(Environment env) {
+        Profiles profile = Profiles.of("dev", "test");
+        boolean flag = env.acceptsProfiles(profile);
+        return new Docket(DocumentationType.OAS_30)
+                .apiInfo(apiInfo())
+                .enable(flag)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("me.duelsol.springbootseed.controller"))
+                .paths(PathSelectors.any())
+                .build();
+    }
 
-        return new OpenAPI()
-                .components(new Components())
-                .info(info);
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Spring Boot Seed API")
+                .description("This is a sample Spring Boot RESTful service using OpenAPI.")
+                .version("1.0.0")
+                .build();
     }
 
 }

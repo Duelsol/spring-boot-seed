@@ -9,14 +9,14 @@ import lombok.Getter;
 @Getter
 public class ResponseData {
 
-    @Schema(description = "编号，非\"0\"时都表示发生错误。")
+    @Schema(description = "编号，非\"00000\"时都表示发生错误。")
     private final String code;
 
     @Schema(description = "消息，在错误时说明具体原因。")
     private final String message;
 
     public ResponseData() {
-        this.code = "0";
+        this.code = ErrorCode.SUCCESS.getCode();
         this.message = null;
     }
 
