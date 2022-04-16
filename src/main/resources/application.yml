@@ -85,9 +85,6 @@ spring:
         queue-capacity: 1000
         keep-alive: 60s
 
-springdoc:
-  packages-to-scan: me.duelsol.springbootseed
-
 management:
   endpoints:
     web:
