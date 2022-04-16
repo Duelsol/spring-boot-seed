@@ -73,6 +73,10 @@ spring:
     password:
     timeout: 10s
 
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+
   task:
     execution:
       pool:
