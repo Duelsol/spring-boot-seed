@@ -15,14 +15,31 @@ public class ResponseData {
     @Schema(description = "消息，在错误时说明具体原因。")
     private final String message;
 
-    public ResponseData() {
-        this.code = ErrorCode.SUCCESS.getCode();
-        this.message = null;
-    }
+    @Schema(description = "数据。")
+    private final Object data;
 
     public ResponseData(String code, String message) {
         this.code = code;
         this.message = message;
+        this.data = null;
+    }
+
+    public ResponseData(String code, String message, Object data) {
+        this.code = code;
+        this.message = message;
+        this.data = null;
+    }
+
+    public static ResponseData success(String message, Object data) {
+        return new ResponseData(ResponseCode.SUCCESS.getCode(), message, data);
+    }
+
+    public static ResponseData success(String message) {
+        return success(message, null);
+    }
+
+    public static ResponseData success(Object data) {
+        return success(null, data);
     }
 
 }

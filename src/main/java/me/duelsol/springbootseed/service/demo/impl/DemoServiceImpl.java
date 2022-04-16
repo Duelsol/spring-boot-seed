@@ -2,8 +2,6 @@ package me.duelsol.springbootseed.service.demo.impl;
 
 import me.duelsol.springbootseed.dao.demo.DemoRepository;
 import me.duelsol.springbootseed.dto.demo.DemoBean;
-import me.duelsol.springbootseed.dto.demo.DemoDTO;
-import me.duelsol.springbootseed.dto.demo.DemoListDTO;
 import me.duelsol.springbootseed.entity.demo.Demo;
 import me.duelsol.springbootseed.service.demo.DemoService;
 import org.springframework.beans.BeanUtils;
@@ -23,18 +21,17 @@ public class DemoServiceImpl implements DemoService {
     private DemoRepository demoRepository;
 
     @Override
-    public DemoListDTO findAllDemos() {
+    public List<DemoBean> findAllDemos() {
         List<Demo> demoList = demoRepository.findAll();
-        List<DemoBean> demoBeanList = demoList.stream().map(demo -> {
+        return demoList.stream().map(demo -> {
             DemoBean demoBean = new DemoBean();
             BeanUtils.copyProperties(demo, demoBean);
             return demoBean;
         }).collect(Collectors.toList());
-        return new DemoListDTO(demoBeanList);
     }
 
     @Override
-    public DemoDTO createDemo(int amount, String detail) {
+    public DemoBean createDemo(int amount, String detail) {
         Demo demo = new Demo();
         demo.setAmount(amount);
         demo.setDetail(detail);
@@ -42,7 +39,7 @@ public class DemoServiceImpl implements DemoService {
         DemoBean demoBean = new DemoBean();
         BeanUtils.copyProperties(demo, demoBean);
 
-        return new DemoDTO(demoBean);
+        return demoBean;
     }
 
 }

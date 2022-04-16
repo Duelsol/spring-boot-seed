@@ -2,9 +2,8 @@ package me.duelsol.springbootseed.controller.demo;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
-import me.duelsol.springbootseed.dto.demo.DemoDTO;
-import me.duelsol.springbootseed.dto.demo.DemoListDTO;
 import me.duelsol.springbootseed.framework.security.AccessTokenManager;
+import me.duelsol.springbootseed.framework.support.ResponseData;
 import me.duelsol.springbootseed.service.demo.DemoService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -43,14 +42,14 @@ public class DemoController {
 
     @Operation(summary = "列表接口", description = "获取所有数据", tags = { "demo" })
     @GetMapping(value = "list")
-    public DemoListDTO list() {
-        return demoService.findAllDemos();
+    public ResponseData list() {
+        return ResponseData.success(demoService.findAllDemos());
     }
 
     @Operation(summary = "保存接口", description = "新增数据", tags = { "demo" })
     @PostMapping(value = "save")
-    public DemoDTO save() {
-        return demoService.createDemo(100, "no detail");
+    public ResponseData save() {
+        return ResponseData.success(demoService.createDemo(100, "no detail"));
     }
 
 }
