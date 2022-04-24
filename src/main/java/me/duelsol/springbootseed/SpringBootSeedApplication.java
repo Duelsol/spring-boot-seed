@@ -1,6 +1,7 @@
 package me.duelsol.springbootseed;
 
 import me.duelsol.springbootseed.config.ElegantShutdownConfig;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -12,10 +13,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@MapperScan("me.duelsol.springbootseed.mapper")
 @EnableCaching
 @EnableJpaAuditing
 @EnableAsync
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class SpringBootSeedApplication {
 
     public static void main(String[] args) {

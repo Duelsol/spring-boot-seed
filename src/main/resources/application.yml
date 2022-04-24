@@ -21,18 +21,6 @@ spring:
       enabled: true
       force: true
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-      naming:
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
-    generate-ddl: true
-    show-sql: true
-
   datasource:
     druid:
       initial-size: 1
@@ -64,6 +52,18 @@ spring:
         username: root
         password: root
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: true
+    show-sql: true
+
   cache:
     type: redis
 
@@ -84,6 +84,11 @@ spring:
         max-size: 18
         queue-capacity: 1000
         keep-alive: 60s
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
   endpoints:
