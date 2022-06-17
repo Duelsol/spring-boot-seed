@@ -42,4 +42,12 @@ public class ResponseData {
         return success(null, data);
     }
 
+    public static ResponseData of(ResponseCode code) {
+        return of(code, null);
+    }
+
+    public static ResponseData of(ResponseCode code, Object data) {
+        return code.toData(data);
+    }
+
 }
