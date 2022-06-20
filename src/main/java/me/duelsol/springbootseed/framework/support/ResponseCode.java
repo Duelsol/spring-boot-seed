@@ -8,7 +8,12 @@ public enum ResponseCode {
     /**
      * 成功
      */
-    SUCCESS("00000", "成功");
+    SUCCESS("00000", "成功"),
+
+    /**
+     * 未知错误
+     */
+    ERROR("99999", "未知错误");
 
     private final String code;
     private final String description;
