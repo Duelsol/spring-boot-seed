@@ -3,23 +3,19 @@ server:
   servlet:
     session:
       cookie:
+        http-only: true
         secure: true
       timeout: 60
   tomcat:
     uri-encoding: UTF-8
-    max-threads: 500
+    threads:
+      max: 500
     accept-count: 1000
-  connection-timeout: 20000
+    connection-timeout: 20000
 
 spring:
   application:
     name: spring-boot-seed
-
-  http:
-    encoding:
-      charset: utf-8
-      enabled: true
-      force: true
 
   datasource:
     druid:
@@ -72,6 +68,10 @@ spring:
     port: 6379
     password:
     timeout: 10s
+
+  elasticsearch:
+    rest:
+      uris: http://127.0.0.1:9200
 
   jackson:
     default-property-inclusion: non_null
