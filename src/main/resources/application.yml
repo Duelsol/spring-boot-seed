@@ -7,9 +7,9 @@ server:
         secure: true
       timeout: 60
   tomcat:
-    uri-encoding: UTF-8
+    max-connections: 20000
     threads:
-      max: 500
+      max: 1000
     accept-count: 1000
     connection-timeout: 20000
 
