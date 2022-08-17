@@ -48,8 +48,7 @@ public class ElasticsearchConfig {
                         .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
                         .setDefaultCredentialsProvider(credentialsProvider))
                 .setRequestConfigCallback(requestConfigBuilder -> requestConfigBuilder
-                        .setConnectTimeout(3000)
-                        .setSocketTimeout(60000)));
+                        .setConnectTimeout(3000)));
     }
 
 }
