@@ -1,9 +1,7 @@
 package me.duelsol.springbootseed.entity;
 
 import me.duelsol.springbootseed.service.CacheService;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import me.duelsol.springbootseed.util.ApplicationContextUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
@@ -19,9 +17,7 @@ import java.util.List;
  * @author 冯奕骅
  */
 @Component
-public class CacheEntityListener implements ApplicationContextAware {
-
-    private static ApplicationContext applicationContext;
+public class CacheEntityListener {
 
     @PostPersist
     public void postPersist(Object target) {
@@ -62,11 +58,6 @@ public class CacheEntityListener implements ApplicationContextAware {
         });
     }
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        CacheEntityListener.applicationContext = applicationContext;
-    }
-
     private List<CacheService> getCacheServiceByEntity(BaseEntity entity) {
         List<CacheService> result = new ArrayList<>();
         if (entity == null) {
@@ -79,7 +70,7 @@ public class CacheEntityListener implements ApplicationContextAware {
         }
         Class<? extends CacheService>[] values = cacheListeners.value();
         for (Class<? extends CacheService> value : values) {
-            result.add(applicationContext.getBean(value));
+            result.add(ApplicationContextUtils.getBean(value));
         }
         return result;
     }
