@@ -18,6 +18,7 @@ import javax.net.ssl.SSLContext;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 import java.util.Arrays;
 
 /**
@@ -46,7 +47,8 @@ public class ElasticsearchConfig {
                 .setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
                         .setSSLContext(sslContext)
                         .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
-                        .setDefaultCredentialsProvider(credentialsProvider))
+                        .setDefaultCredentialsProvider(credentialsProvider)
+                        .setKeepAliveStrategy((response, context) -> Duration.ofMinutes(10).toMillis()))
                 .setRequestConfigCallback(requestConfigBuilder -> requestConfigBuilder
                         .setConnectTimeout(3000)));
     }
