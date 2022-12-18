@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.duelsol.springbootseed.mapper.DemoMapper">
+    <resultMap id="demoDto" type="me.duelsol.springbootseed.dto.demo.DemoDto">
+        <collection property="userIds" javaType="ArrayList" ofType="String" column="{id = id}" select="selectDemoAuth"/>
+    </resultMap>
+    <select id="selectByIdAndUserId" resultMap="demoDto">
+        select t.*
+        from springmvc_demo t
+        <where>
+            t.id = #{id} and t.delete_flag = 0
+            <if test="userId != null and userId != ''">
+                and #{userId} in (select user_id from springmvc_demo_auth where demo_id = t.id)
+            </if>
+        </where>
+    </select>
+    <select id="selectDemoAuth" resultType="String">
+        select user_id from springmvc_demo_auth where demo_id = #{id}
+    </select>
+</mapper>

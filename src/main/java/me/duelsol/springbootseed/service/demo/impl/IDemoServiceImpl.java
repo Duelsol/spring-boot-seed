@@ -1,9 +1,9 @@
 package me.duelsol.springbootseed.service.demo.impl;
 
 import me.duelsol.springbootseed.dao.demo.DemoRepository;
-import me.duelsol.springbootseed.dto.demo.DemoBean;
+import me.duelsol.springbootseed.dto.demo.DemoDto;
 import me.duelsol.springbootseed.entity.demo.Demo;
-import me.duelsol.springbootseed.service.demo.DemoService;
+import me.duelsol.springbootseed.service.demo.IDemoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,31 +15,31 @@ import java.util.stream.Collectors;
  * @author 冯奕骅
  */
 @Service
-public class DemoServiceImpl implements DemoService {
+public class IDemoServiceImpl implements IDemoService {
 
     @Autowired
     private DemoRepository demoRepository;
 
     @Override
-    public List<DemoBean> findAllDemos() {
+    public List<DemoDto> findAllDemos() {
         List<Demo> demoList = demoRepository.findAll();
         return demoList.stream().map(demo -> {
-            DemoBean demoBean = new DemoBean();
-            BeanUtils.copyProperties(demo, demoBean);
-            return demoBean;
+            DemoDto demoDto = new DemoDto();
+            BeanUtils.copyProperties(demo, demoDto);
+            return demoDto;
         }).collect(Collectors.toList());
     }
 
     @Override
-    public DemoBean createDemo(int amount, String detail) {
+    public DemoDto createDemo(int amount, String detail) {
         Demo demo = new Demo();
         demo.setAmount(amount);
         demo.setDetail(detail);
 
-        DemoBean demoBean = new DemoBean();
-        BeanUtils.copyProperties(demo, demoBean);
+        DemoDto demoDto = new DemoDto();
+        BeanUtils.copyProperties(demo, demoDto);
 
-        return demoBean;
+        return demoDto;
     }
 
 }

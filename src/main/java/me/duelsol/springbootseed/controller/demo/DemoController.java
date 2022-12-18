@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import me.duelsol.springbootseed.framework.security.AccessTokenManager;
 import me.duelsol.springbootseed.framework.support.ResponseData;
-import me.duelsol.springbootseed.service.demo.DemoService;
+import me.duelsol.springbootseed.service.demo.IDemoService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
     @Autowired
-    private DemoService demoService;
+    private IDemoService demoService;
 
     @Operation(summary = "登录接口", description = "", tags = { "demo" })
     @PostMapping(value = "login")
