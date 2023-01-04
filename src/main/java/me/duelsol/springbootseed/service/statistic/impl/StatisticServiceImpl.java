@@ -41,13 +41,7 @@ public class StatisticServiceImpl implements IStatisticService {
     @Override
     public List<Double> findTopScores(String name, LocalDateTime start, LocalDateTime end) {
         List<Double> result = new ArrayList<>();
-        List<String> indexNames = new ArrayList<>();
-        LocalDateTime temp = start;
-        while(!temp.isAfter(end)) {
-            indexNames.add("statistic-" + temp.format(DateTimeFormatter.ofPattern("yyyy.MM.dd")));
-            temp = temp.plusDays(1);
-        }
-        if (indexNames.size() == 0) {
+        if (start.isAfter(end)) {
             return result;
         }
 
@@ -67,8 +61,7 @@ public class StatisticServiceImpl implements IStatisticService {
                 .size(10);
         builder.addAggregation(aggregation);
 
-        IndexCoordinates indexCoordinates = IndexCoordinates.of(indexNames.toArray(new String[0]));
-        SearchHitsIterator<Statistic> iterator = elasticsearchRestTemplate.searchForStream(builder.build(), Statistic.class, indexCoordinates);
+        SearchHitsIterator<Statistic> iterator = elasticsearchRestTemplate.searchForStream(builder.build(), Statistic.class, IndexCoordinates.of("statistic-*"));
         Aggregations aggregations = iterator.getAggregations();
         if (aggregations == null) {
             return result;
