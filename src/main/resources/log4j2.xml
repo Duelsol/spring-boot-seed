@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorinterval="100">
+    <Properties>
+        <!--工程的名称 每个项目配置自己的工程名称-->
+        <Property name="APPLICATION_NAME" value="spring-boot-seed"/>
+        <Property name="FILE_PATH" value="/app/logs/spring-boot-seed"/>
+
+        <!--日志格式 记录要素1 事件的日期 事件级别 线程信息 登陆用户 请求的ip 处理程序名 方法 行号
+        (事件类型  事件内容(用户操作 操作对象 业务编号) 事件执行的结果信息 事件的开始结束时间(hh:mm:ss：hh:mm:ss) )-->
+        <property name="LOG_PATTERN" value="%clr{[%d{yyyy-MM-dd HH:mm:ss.SSS}]}{faint} - [%clr{%5p}] - [%clr{%t{magenta}}] - [%clr{${APPLICATION_NAME}}{faint}][%-36logger{36}] %m%n%xwEx"/>
+        <property name="FILE_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}][-%5p] - %thread{15} - [${APPLICATION_NAME}][%-36logger{36}] - %msg%n"/>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <!--控制台只输出level及其以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+        </Console>
+
+        <CustomLevels>
+            <!--注意 ： intLevel 值越小，级别越高 （log4j2 官方文档）-->
+            <CustomLevel name="BATCH" intLevel="50" />
+        </CustomLevels>
+        <!-- 这个会打印出所有的error及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFileBatch" fileName="${FILE_PATH}/${APPLICATION_NAME}-batch.log"
+                     filePattern="${FILE_PATH}/${APPLICATION_NAME}-batch-%d{yyyy-MM-dd}.%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <!-- log文件只打印error级别信息 -->
+            <ThresholdFilter level="BATCH" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <!--interval属性用来指定多久滚动一次，24hour-->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="60MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
+            <DefaultRolloverStrategy max="15"/>
+        </RollingFile>
+
+        <!-- 这个会打印出所有的error及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFileError" fileName="${FILE_PATH}/${APPLICATION_NAME}-error.log"
+                     filePattern="${FILE_PATH}/${APPLICATION_NAME}-error-%d{yyyy-MM-dd}.%i.log">
+            <PatternLayout pattern="${FILE_LOG_PATTERN}"/>
+            <!-- log文件只打印error级别信息 -->
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <!--interval属性用来指定多久滚动一次，24hour-->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="60MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
+            <DefaultRolloverStrategy max="15"/>
+        </RollingFile>
+
+        <!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFileInfo" fileName="${FILE_PATH}/${APPLICATION_NAME}-info.log"
+                     filePattern="${FILE_PATH}/${APPLICATION_NAME}-info-%d{yyyy-MM-dd}.%i.log">
+            <PatternLayout pattern="${FILE_LOG_PATTERN}"/>
+            <!-- log文件只打印error级别信息 -->
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <!--interval属性用来指定多久滚动一次，24hour-->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="60MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
+            <DefaultRolloverStrategy max="15"/>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
+        <Logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
+        <Logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
+        <Logger name="org.apache.sshd.common.util.SecurityUtils" level="WARN"/>
+        <Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"/>
+        <Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
+        <Logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
+        <Logger name="org.springframework.web" level="ERROR"/>
+
+        <!-- 输出info级别信息 Root 节点不可删除，但是root的level 可以在yml文件中配置-->
+        <Root>
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFileError"/>
+            <AppenderRef ref="RollingFileInfo"/>
+            <AppenderRef ref="RollingFileBatch"/>
+        </Root>
+    </Loggers>
+</Configuration>
